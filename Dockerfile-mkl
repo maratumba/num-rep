@@ -1,0 +1,7 @@
+FROM python:3.11.2
+
+WORKDIR /app
+COPY requirements-mkl.txt ./
+RUN pip install -r requirements-mkl.txt
+COPY *.py *.json ./
+RUN mkdir output

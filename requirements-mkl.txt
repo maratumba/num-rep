@@ -1,0 +1,2 @@
+--extra-index-url https://urob.github.io/numpy-mkl
+numpy==2.3.4
