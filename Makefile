@@ -18,11 +18,14 @@ calc-score:
 	python calc_score.py output/result.txt output/result-arm64.txt output/result-amd64.txt > output/scores.txt
 	cat output/scores.txt
 
-docker-run:
-	python test_cnr.py output/result.txt output/native_platform.json; \
+docker-run-arm64:
 	docker run --platform linux/arm64 -v ./output:/app/output cnr-test:latest-arm64 python test_cnr.py ./output/result-arm64.txt ./output/arm64_platform.json; \
+
+docker-run-amd64:
 	docker run --platform linux/amd64 -v ./output:/app/output cnr-test:latest-amd64 python test_cnr.py ./output/result-amd64.txt ./output/amd64_platform.json;
 
+docker-run: docker-run-arm64 docker-run-amd64
+	python test_cnr.py output/result.txt output/native_platform.json; \
 
 .SILENT: run
 run: docker-run calc-score
